@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WHGP Time-Attack</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    nav { background: #333; color: white; display: flex; justify-content: space-around; padding: 1rem; }
+    nav a { color: white; text-decoration: none; padding: 0.5rem; }
+    nav a:hover { background: #555; }
+    .page { display: none; padding: 2rem; }
+    .active { display: block; }
+    .login-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9); color: white; display: flex;
+      flex-direction: column; justify-content: center; align-items: center;
+    }
+    input, textarea { display: block; margin-bottom: 1rem; width: 100%; padding: 0.5rem; }
+    .event-box { background: #f4f4f4; padding: 1rem; border-left: 4px solid #333; margin-bottom: 1rem; }
+    .leaderboard-entry { cursor: pointer; border-bottom: 1px solid #ccc; padding: 0.5rem 0; }
+  </style>
+</head>
+<body>
+<div class="login-overlay" id="loginOverlay">
+  <h2>Inloggen</h2>
+  <input type="text" id="username" placeholder="Gebruikersnaam">
+  <input type="password" id="password" placeholder="Wachtwoord">
+  <button onclick="checkLogin()">Login</button>
+  <p id="loginError" style="color:red;"></p>
+</div>
+
+<nav>
+  <a href="#" onclick="showPage('info')">Info & Nieuws</a>
+  <a href="#" onclick="showPage('leaderboard')">Leaderboards</a>
+  <a href="#" onclick="showPage('submit')">Inzenden</a>
+</nav>
+
+<div id="info" class="page active">
+  <h1>WHGP Nieuws</h1>
+  <p>Welkom bij de WHGP Time-Attack community!</p>
+  <p>Hier vind je het laatste nieuws en updates.</p>
+  <img src="placeholder.jpg" alt="Foto" width="300">
+  <p><a href="sample.pdf" download>Download het reglement (PDF)</a></p>
+
+  <h2>Upcoming Events</h2>
+  <div class="event-box">
+    <strong>15 mei 2025:</strong> Circuit Zolder - Testdag
+  </div>
+  <div class="event-box">
+    <strong>1 juni 2025:</strong> WHGP Time-Attack #1
+  </div>
+</div>
+
+<div id="leaderboard" class="page">
+  <h1>Algemene WHGP Time-Attack Leaderboard</h1>
+  <div class="leaderboard-entry" onclick="alert('Details pagina nog in ontwikkeling')">
+    <strong>Jan Jansen</strong> - 1:23.456 - BMW M3
+  </div>
+
+  <h2>Klassementen</h2>
+  <ul>
+    <li>Klasse 1</li>
+    <li>Klasse 2</li>
+    <li>Klasse 3</li>
+    <li>Klasse 4</li>
+    <li>Klasse 5</li>
+    <li>Klasse 6</li>
+  </ul>
+</div>
+
+<div id="submit" class="page">
+  <h1>Inzending Doen</h1>
+  <form action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST" target="_blank">
+    <input type="text" name="entry.nickname" placeholder="Nickname" required>
+    <input type="text" name="entry.vehicle" placeholder="Voertuig" required>
+    <input type="text" name="entry.hp" placeholder="Vermogen voertuig (pk)" required>
+    <input type="text" name="entry.weight" placeholder="Gewicht voertuig (kg)" required>
+    <input type="text" name="entry.runtime" placeholder="Run tijd" required>
+    <input type="datetime-local" name="entry.datetime" required>
+    <label>Foto's uploaden (Google Form gebruiken):</label>
+    <input type="file" accept="image/*" multiple disabled>
+    <label>Video uploaden (Google Form gebruiken):</label>
+    <input type="file" accept="video/*" disabled>
+    <textarea name="entry.comment" placeholder="Opmerking"></textarea>
+    <button type="submit">Verzenden</button>
+  </form>
+</div>
+
+<script>
+  const pages = document.querySelectorAll('.page');
+  function showPage(id) {
+    pages.forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function checkLogin() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    const allowedUsers = [{ username: 'admin', password: 'whgp2025' }];
+
+    const match = allowedUsers.find(u => u.username === user && u.password === pass);
+    if (match) {
+      document.getElementById('loginOverlay').style.display = 'none';
+    } else {
+      document.getElementById('loginError').innerText = 'Ongeldige login.';
+    }
+  }
+</script>
+</body>
+</html>
